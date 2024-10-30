@@ -6,6 +6,7 @@
     #include <direct.h>
     #define MKDIR(DIR) _mkdir(DIR)
 #endif
+#include "insertionsort.h"
 
 
 void criarDiretorioSort() {
@@ -41,9 +42,43 @@ void criarDiretorioSort() {
     }
 }
 
+void mostrarMenuPrincipal() {
+    printf("\nEscolha o algoritmo a ser executado:\n");
+    printf("1. Insertion Sort\n");
+    printf("2. Outro Algoritmo (Exemplo)\n");
+    printf("3. Sair\n");
+    printf("Digite sua escolha: ");
+}
+
 int main()
 {
     criarDiretorioSort();
 
-    return 0;  
+    int escolha = 0;
+    
+    while (1) {
+        mostrarMenuPrincipal();
+        scanf("%d", &escolha);
+        
+        switch (escolha) {
+            case 1:
+                printf("Executando Insertion Sort...\n");
+                executarInsertionSortMenu();
+                break;
+
+            case 2:
+                printf("Executando Outro Algoritmo...\n");
+                break;
+
+            case 3:
+                printf("Saindo do programa...\n");
+                return 0;
+
+            default:
+                printf("Opção inválida. Tente novamente.\n");
+                break;
+        }
+    }
+
+    return 0; 
 }
