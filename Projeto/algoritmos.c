@@ -72,7 +72,7 @@ int* bubbleSort(const char *arquivo, const char *nomePasta, const char *tipo) {
 
     // Registra o tempo em um arquivo específico
     char nomeArquivoTempo[200];
-    sprintf(nomeArquivoTempo, "%s/Arquivos de Tempo/%s/tempo%s%d.txt", nomePasta, tipo, tamanho);
+    sprintf(nomeArquivoTempo, "BubbleSort/Arquivos de Tempo/%s/tempo%s%d.txt", nomePasta, tipo, tamanho);
     FILE *fileTempo = fopen(nomeArquivoTempo, "w");
     if (fileTempo) {
         fprintf(fileTempo, "Tempo de execução: %f segundos\n", tempo);
@@ -111,7 +111,7 @@ int* shellSort(const char *arquivo, const char *nomePasta, const char *tipo) {
 
     // Registra o tempo em um arquivo específico
     char nomeArquivoTempo[200];
-    sprintf(nomeArquivoTempo, "%s/Arquivos de Tempo/%s/tempo%s%d.txt", nomePasta, tipo, tamanho);
+    sprintf(nomeArquivoTempo, "ShellSort/Arquivos de Tempo/%s/tempo%s%d.txt", nomePasta, tipo, tamanho);
     FILE *fileTempo = fopen(nomeArquivoTempo, "w");
     if (fileTempo) {
         fprintf(fileTempo, "Tempo de execução: %f segundos\n", tempo);
@@ -151,7 +151,7 @@ int* selectionSort(const char *arquivo, const char *nomePasta, const char *tipo)
 
     // Registra o tempo em um arquivo específico
     char nomeArquivoTempo[200];
-    sprintf(nomeArquivoTempo, "%s/Arquivos de Tempo/%s/tempo%s%d.txt", nomePasta, tipo, tamanho);
+    sprintf(nomeArquivoTempo, "SelectionSort/Arquivos de Tempo/%s/tempo%s%d.txt", nomePasta, tipo, tamanho);
     FILE *fileTempo = fopen(nomeArquivoTempo, "w");
     if (fileTempo) {
         fprintf(fileTempo, "Tempo de execução: %f segundos\n", tempo);
