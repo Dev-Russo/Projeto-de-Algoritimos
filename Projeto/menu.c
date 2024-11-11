@@ -6,24 +6,25 @@
     #include <direct.h>
     #define MKDIR(DIR) _mkdir(DIR)
 #endif
-#include "insertionsort.h"
+#include "algoritmos.h"
+#include "functions.h"
 
 
-void criarDiretorioSort() {
+void criarDiretorioSort(const char *algoritmos) {
     struct stat st = {0};
 
     // Criar o diretório principal para o projeto se ele não existir
-    if (stat("InsertionSort", &st) == -1) {
-        MKDIR("InsertionSort");
+    if (stat(algoritmos, &st) == -1) {
+        MKDIR(algoritmos);
     }
 
     // Definindo as categorias de entrada
-    char categorias[][50] = {"Arquivos de Entrada", "Arquivos de Saida", "Arquivos de Tempo"};
+    const char *categorias[] = {"Arquivos de Entrada", "Arquivos de Saida", "Arquivos de Tempo"};
     
     // Criar subdiretórios dentro do diretório principal
     for (int i = 0; i < 3; i++) {
-        char dirName[50];
-        snprintf(dirName, sizeof(dirName), "InsertionSort/%s", categorias[i]);
+        char dirName[100];
+        snprintf(dirName, sizeof(dirName), "%s/%s", algoritmos ,categorias[i]);
         
         // Verificar se o diretório existe, caso contrário, criá-lo
         if (stat(dirName, &st) == -1) {
@@ -31,9 +32,9 @@ void criarDiretorioSort() {
             printf("Diretório %s criado com sucesso.\n", dirName);
         }
 
-        char subcategorias[][20] = {"Crescente", "Decrescente", "Random"};
+        const char *subcategorias[] = {"Crescente", "Decrescente", "Random"};
         for(int j = 0; j < 3; j++){
-            snprintf(dirName, sizeof(dirName), "InsertionSort/%s/%s",  categorias[i], subcategorias[j]);
+            snprintf(dirName, sizeof(dirName), "%s/%s/%s",  algoritmos, categorias[i], subcategorias[j]);
             if(stat(dirName, &st) == -1){
                 MKDIR(dirName);
                 printf("Diretório %s criado com sucesso.\n", dirName);
@@ -45,15 +46,16 @@ void criarDiretorioSort() {
 void mostrarMenuPrincipal() {
     printf("\nEscolha o algoritmo a ser executado:\n");
     printf("1. Insertion Sort\n");
-    printf("2. Outro Algoritmo (Exemplo)\n");
-    printf("3. Sair\n");
+    printf("2. Bubble Sort\n");
+    printf("3. Shell Sort\n");
+    printf("4. Selection Sort\n");
+    printf("5. Sair\n");
     printf("Digite sua escolha: ");
 }
 
 int main()
 {
-    criarDiretorioSort();
-
+    char algoritmos[][50] = {"InsertionSort, BubbleSort, ShellSort, SelectSort"};
     int escolha = 0;
     
     while (1) {
@@ -63,17 +65,27 @@ int main()
         switch (escolha) {
             case 1:
                 printf("Executando Insertion Sort...\n");
-                executarInsertionSortMenu();
+                criarDiretorioSort("InsertionSort");
+                executarMenu("InsertionSort");
                 break;
-
             case 2:
-                printf("Executando Outro Algoritmo...\n");
+                printf("Executando Bubble Sort...\n");
+                criarDiretorioSort("BubbleSort");
+                executarMenu("BubbleSort");
                 break;
-
             case 3:
+                printf("Executando Shell Sort...\n");
+                criarDiretorioSort("ShellSort");
+                executarMenu("ShellSort");
+                break;
+            case 4:
+                printf("Executando Selection Sort...\n");
+                criarDiretorioSort("SelectionSort");
+                executarMenu("SelectionSort");
+                break;
+            case 5:
                 printf("Saindo do programa...\n");
                 return 0;
-
             default:
                 printf("Opção inválida. Tente novamente.\n");
                 break;

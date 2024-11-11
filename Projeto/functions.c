@@ -3,9 +3,10 @@
 #include <time.h>
 #include <string.h>
 #include <time.h>
-#include "insertionsort.h"
+#include "functions.h"
+#include "algoritmos.h"
 
-void executarInsertionSortMenu() {
+void executarMenu(const char *algoritmo) {
     while (1) {
         printf("\nEscolha uma opcao:\n");
         printf("1. Gerar instancias crescentes\n");
@@ -35,14 +36,16 @@ void executarInsertionSortMenu() {
             default: printf("Opção inválida.\n"); continue;
         }
 
-        gerarInstancias(nomePasta, tipo, tamanho);
+        gerarInstancias(algoritmo, nomePasta, tipo, tamanho);
         
         char arquivo[200];
-        sprintf(arquivo, "InsertionSort/Arquivos de Entrada/%s/entrada%s%d.txt", nomePasta, tipo, tamanho);
+        sprintf(arquivo, "%s/Arquivos de Entrada/%s/entrada%s%d.txt", algoritmo, nomePasta, tipo, tamanho);
         
-        int *arrayOrdenado = insertionSort(arquivo, nomePasta, tipo);
+        
+        ///ARRUUMNARARARADASDSADKAFLHJDLGÇHJDFSAGAHGJKGLASFHGJLAKFHJKDFLBHJKLSFHBADSJKLFHSJKDLFHASJKLFDSHAFGHJBAJKL
+        int *arrayOrdenado = ordenar(algoritmo, arquivo, nomePasta, tipo);
         if (arrayOrdenado) {
-            gerarInstanciasDeSaida(arrayOrdenado, nomePasta, tipo, tamanho);
+            gerarInstanciasDeSaida(algoritmo, arrayOrdenado, nomePasta, tipo, tamanho);
             free(arrayOrdenado);  // Libera memória após uso
         }
     }
@@ -73,9 +76,9 @@ int* carregarArrayDoArquivo(const char *nomeArquivo, int *tamanho) {
     return array;
 }
 
-void gerarInstancias(const char *nomePasta, const char *tipo, int tamanho) {
+void gerarInstancias(const char *algoritmo, const char *nomePasta, const char *tipo, int tamanho) {
     char nomeArquivo[200];
-    sprintf(nomeArquivo, "InsertionSort/Arquivos de Entrada/%s/entrada%s%d.txt", nomePasta, tipo, tamanho);
+    sprintf(nomeArquivo, "%s/Arquivos de Entrada/%s/entrada%s%d.txt", algoritmo, nomePasta, tipo, tamanho);
 
     FILE *file = fopen(nomeArquivo, "w");
     if (!file) {
@@ -95,9 +98,9 @@ void gerarInstancias(const char *nomePasta, const char *tipo, int tamanho) {
     //printf("Arquivo %s criado com sucesso!\n", nomeArquivo);
 }
 
-void gerarInstanciasDeSaida(const int *array, const char *nomePasta, const char *tipo, int tamanho) {
+void gerarInstanciasDeSaida(const char *algoritmo, const int *array, const char *nomePasta, const char *tipo, int tamanho) {
     char nomeArquivo[200];
-    sprintf(nomeArquivo, "InsertionSort/Arquivos de Saida/%s/saida%s%d.txt", nomePasta, tipo, tamanho);
+    sprintf(nomeArquivo, "%s/Arquivos de Saida/%s/saida%s%d.txt", algoritmo, nomePasta, tipo, tamanho);
 
     FILE *file = fopen(nomeArquivo, "w");
     if (!file) {
@@ -111,45 +114,6 @@ void gerarInstanciasDeSaida(const int *array, const char *nomePasta, const char 
     }
     fclose(file);
     //printf("Arquivo %s criado com sucesso!\n", nomeArquivo);
-}
-
-int* insertionSort(const char *arquivo, const char *nomePasta, const char *tipo) {
-    int tamanho;
-    int *array = carregarArrayDoArquivo(arquivo, &tamanho);
-    if (!array) return NULL;
-
-    // Inicia o temporizador
-    clock_t startC = clock();
-
-    // Ordenação
-    for (int i = 1; i < tamanho; i++) {
-        int chave = array[i];
-        int j = i - 1;
-        while (j >= 0 && array[j] > chave) {
-            array[j + 1] = array[j];
-            j--;
-        }
-        array[j + 1] = chave;
-    }
-
-    // Finaliza o temporizador e calcula o tempo
-    clock_t endC = clock();
-    double tempo = (double)(endC - startC) / CLOCKS_PER_SEC;
-    printf("Tempo de execucao: %f segundos\n", tempo);
-
-    // Registra o tempo em um arquivo específico
-    char nomeArquivoTempo[200];
-    sprintf(nomeArquivoTempo, "InsertionSort/Arquivos de Tempo/%s/tempo%s%d.txt", nomePasta, tipo, tamanho);
-    FILE *fileTempo = fopen(nomeArquivoTempo, "w");
-    if (fileTempo) {
-        fprintf(fileTempo, "Tempo de execução: %f segundos\n", tempo);
-        fclose(fileTempo);
-        //printf("Arquivo de tempo %s criado com sucesso!\n", nomeArquivoTempo);
-    } else {
-        printf("Erro ao criar o arquivo de tempo %s!\n", nomeArquivoTempo);
-    }
-
-    return array;
 }
 
 int selecionarTamanho() {
